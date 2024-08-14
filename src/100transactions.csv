@@ -1,0 +1,101 @@
+Category,Amount,Date,Payment Mode,Message
+Groceries,45.6,2024-07-01,Cash,Supermarket shopping
+Transportation,15.2,2024-07-02,Credit Card,Bus fare
+Housing,950,2024-07-03,Check,Rent payment
+Utilities,120.5,2024-07-04,Debit Card,Electricity bill
+Insurance,200,2024-07-05,Bank Transfer,Health insurance
+EatingOut,80.75,2024-07-06,Mobile Payment,Dinner at restaurant
+SavingsAndInvestments,500,2024-07-07,Other,Monthly savings
+PersonalSpending,60,2024-07-08,Online Payment,Clothing
+Entertainment,30,2024-07-09,Mobile Payment,Movie tickets
+Miscellaneous,20,2024-07-10,Other,Random expenses
+Groceries,52.4,2024-07-11,Cash,Weekly groceries
+Transportation,18.9,2024-07-12,Credit Card,Taxi ride
+Housing,1200,2024-07-13,Check,Monthly rent
+Utilities,95.75,2024-07-14,Debit Card,Water bill
+Insurance,220,2024-07-15,Bank Transfer,Car insurance
+EatingOut,45.3,2024-07-16,Mobile Payment,Lunch with friends
+SavingsAndInvestments,300,2024-07-17,Other,Investment deposit
+PersonalSpending,80.25,2024-07-18,Online Payment,Shoes purchase
+Entertainment,15.5,2024-07-19,Mobile Payment,Concert tickets
+Miscellaneous,35,2024-07-20,Other,Birthday gift
+Groceries,75.8,2024-07-21,Cash,Farmers market
+Transportation,12,2024-07-22,Credit Card,Subway fare
+Housing,1050,2024-07-23,Check,Rent payment
+Utilities,140.2,2024-07-24,Debit Card,Internet bill
+Insurance,180,2024-07-25,Bank Transfer,Life insurance
+EatingOut,55,2024-07-26,Mobile Payment,Coffee and snacks
+SavingsAndInvestments,450,2024-07-27,Other,Retirement savings
+PersonalSpending,45,2024-07-28,Online Payment,Book purchase
+Entertainment,50,2024-07-29,Mobile Payment,Theater tickets
+Miscellaneous,25,2024-07-30,Other,Office supplies
+Groceries,30.9,2024-07-31,Cash,Corner store shopping
+Transportation,10.5,2024-08-01,Credit Card,Ferry ride
+Housing,900,2024-08-02,Check,Apartment rent
+Utilities,110,2024-08-03,Debit Card,Gas bill
+Insurance,250,2024-08-04,Bank Transfer,Home insurance
+EatingOut,70,2024-08-05,Mobile Payment,Brunch with family
+SavingsAndInvestments,550,2024-08-06,Other,Mutual fund investment
+PersonalSpending,100,2024-08-07,Online Payment,Electronics purchase
+Entertainment,20,2024-08-08,Mobile Payment,Video game
+Miscellaneous,40,2024-08-09,Other,Pet supplies
+Groceries,65.5,2024-08-10,Cash,Weekly groceries
+Transportation,8.5,2024-08-11,Credit Card,Bus fare
+Housing,1050,2024-08-12,Check,Monthly rent
+Utilities,90.3,2024-08-13,Debit Card,Water bill
+Insurance,190,2024-08-14,Bank Transfer,Health insurance premium
+EatingOut,45,2024-08-15,Mobile Payment,Lunch outing
+SavingsAndInvestments,600,2024-08-16,Other,Savings account deposit
+PersonalSpending,80,2024-08-17,Online Payment,Jewelry purchase
+Entertainment,35,2024-08-18,Mobile Payment,Sports event tickets
+Miscellaneous,50,2024-08-19,Other,Charity donation
+Groceries,55.7,2024-08-20,Cash,Supermarket shopping
+Transportation,14.3,2024-08-21,Credit Card,Taxi fare
+Housing,1200,2024-08-22,Check,Rent payment
+Utilities,115.6,2024-08-23,Debit Card,Electricity bill
+Insurance,230,2024-08-24,Bank Transfer,Car insurance
+EatingOut,75,2024-08-25,Mobile Payment,Dinner with friends
+SavingsAndInvestments,400,2024-08-26,Other,Investment in stocks
+PersonalSpending,95,2024-08-27,Online Payment,Home decor
+Entertainment,45,2024-08-28,Mobile Payment,Amusement park tickets
+Miscellaneous,30,2024-08-29,Other,Household items
+Groceries,35.8,2024-08-30,Cash,Corner store
+Transportation,6.5,2024-08-31,Credit Card,Bus fare
+Housing,1100,2024-09-01,Check,Apartment rent
+Utilities,125.8,2024-09-02,Debit Card,Internet bill
+Insurance,260,2024-09-03,Bank Transfer,Life insurance premium
+EatingOut,85,2024-09-04,Mobile Payment,Dinner at a fine dining restaurant
+SavingsAndInvestments,500,2024-09-05,Other,Retirement fund
+PersonalSpending,120,2024-09-06,Online Payment,Designer clothes
+Entertainment,60,2024-09-07,Mobile Payment,Concert tickets
+Miscellaneous,15,2024-09-08,Other,Stationery
+Groceries,25.6,2024-09-09,Cash,Farmers market
+Transportation,9.8,2024-09-10,Credit Card,Ferry fare
+Housing,1150,2024-09-11,Check,House rent
+Utilities,130.4,2024-09-12,Debit Card,Gas bill
+Insurance,210,2024-09-13,Bank Transfer,Home insurance
+EatingOut,50,2024-09-14,Mobile Payment,Lunch at cafe
+SavingsAndInvestments,400,2024-09-15,Other,Investment in bonds
+PersonalSpending,70,2024-09-16,Online Payment,Fitness equipment
+Entertainment,40,2024-09-17,Mobile Payment,Movie night
+Miscellaneous,35,2024-09-18,Other,Gift purchase
+Groceries,70.5,2024-09-19,Cash,Supermarket shopping
+Transportation,11.3,2024-09-20,Credit Card,Subway fare
+Housing,1250,2024-09-21,Check,Rent payment
+Utilities,100.9,2024-09-22,Debit Card,Water bill
+Insurance,240,2024-09-23,Bank Transfer,Car insurance premium
+EatingOut,65,2024-09-24,Mobile Payment,Dinner with colleagues
+SavingsAndInvestments,700,2024-09-25,Other,Real estate investment
+PersonalSpending,85,2024-09-26,Online Payment,Luxury items
+Entertainment,25,2024-09-27,Mobile Payment,Streaming service subscription
+Miscellaneous,45,2024-09-28,Other,Personal care products
+Groceries,60.2,2024-09-29,Cash,Organic produce shopping
+Transportation,13.7,2024-09-30,Credit Card,Ride-sharing service
+Housing,1300,2024-10-01,Check,Monthly rent payment
+Utilities,110.5,2024-10-02,Debit Card,Electricity bill
+Insurance,220,2024-10-03,Bank Transfer,Travel insurance
+EatingOut,40.5,2024-10-04,Mobile Payment,Lunch at a bistro
+SavingsAndInvestments,550,2024-10-05,Other,Stock market investment
+PersonalSpending,95,2024-10-06,Online Payment,Fitness class membership
+Entertainment,30,2024-10-07,Mobile Payment,Music festival tickets
+Miscellaneous,20,2024-10-08,Other,Online course fee

@@ -1,0 +1,11 @@
+Category,Amount,Date,Payment Mode,Message
+Groceries,45.6,2024-07-01,Cash,Supermarket shopping
+Transportation,15.2,2024-07-02,Credit Card,Bus fare
+Housing,950,2024-07-03,Check,Rent payment
+Utilities,120.5,2024-07-04,Debit Card,Electricity bill
+Insurance,200,2024-07-05,Bank Transfer,Health insurance
+EatingOut,80.75,2024-07-06,Mobile Payment,Dinner at restaurant
+SavingsAndInvestments,500,2024-07-07,Other,Monthly savings
+PersonalSpending,60,2024-07-08,Online Payment,Clothing
+Entertainment,30,2024-07-09,Mobile Payment,Movie tickets
+Miscellaneous,20,2024-07-10,Other,Random expenses
