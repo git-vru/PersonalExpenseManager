@@ -3,13 +3,6 @@ project(PBT)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# Add paths for libxlsxwriter
-include_directories(/opt/homebrew/Cellar/libxlsxwriter/1.1.7/include)
-link_directories(/opt/homebrew/Cellar/libxlsxwriter/1.1.7/lib)
-
-# Find and link libxlsxwriter
-find_library(XLSXWRITER_LIBRARY NAMES xlsxwriter REQUIRED)
-
 # Add ASan flags for Clang or GCC
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
@@ -17,6 +10,18 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${ASAN_FLAGS}")
 endif()
 
+include(FetchContent)
+
+# Fetch libxlsxwriter from the master branch
+FetchContent_Declare(
+        libxlsxwriter
+        GIT_REPOSITORY https://github.com/jmcnamara/libxlsxwriter.git
+        GIT_TAG main  # Use the master branch
+)
+
+FetchContent_MakeAvailable(libxlsxwriter)
+
+# Add the executable and link libraries
 add_executable(PBT
         src/main.cpp
         src/MainMenu.cpp
@@ -27,6 +32,8 @@ add_executable(PBT
         src/Transaction.h
         src/CSVExporter.cpp
         src/CSVExporter.h
+        src/CSVImporter.cpp
+        src/CSVImporter.h
         src/ExcelExporter.cpp
         src/ExcelExporter.h
         src/Utils.cpp
@@ -61,4 +68,4 @@ add_executable(PBT
         src/PaymentModeReport.h
 )
 
-target_link_libraries(PBT ${XLSXWRITER_LIBRARY})
+target_link_libraries(PBT PRIVATE xlsxwriter)
