@@ -1,20 +1,8 @@
 # Personal Expense Tracker
 
-Description: An application to track personal expenses
-Features:
-
-Input transactions with categories, amounts, and dates.
-Display a summary of expenses and income.
-Generate reports for a specific time period.
-Export and import transaction data (CSV or Excel).
-
-TODO:
-try to change the dates to chrono libra
-# Project Name
-
 ## Overview
 
-This project is a comprehensive financial reporting tool designed to manage and analyze transaction data. It allows users to import, export, and generate various financial reports based on different criteria such as date ranges, categories, and payment modes. The application also provides options to generate reports in CSV and Excel formats.
+This project is a comprehensive financial reporting tool used from the CLI designed to manage and analyze transaction data. It allows users to import, export, and generate various financial reports based on different criteria such as date ranges, categories, and payment modes. The application also provides options to generate reports in CSV and Excel formats.
 
 ## Features
 
@@ -30,18 +18,18 @@ This project is a comprehensive financial reporting tool designed to manage and 
 
 ### Transaction Management
 
-- **Transaction.cpp**: Represents a single financial transaction. This class includes details like amount, date, category, and payment mode.
-- **TransactionManager.cpp**: Manages a collection of transactions. It handles adding, removing, and querying transactions.
+- **Transaction.cpp**: Represents a single financial transaction. This class includes details like amount, date, category, transaction message and payment mode.
+- **TransactionManager.cpp**: Manages a collection of transactions. It handles adding, removing, deleting transactions and all other operations related to transactions.
 - **TransactionParser.cpp**: Parses transaction data from raw input, converting it into `Transaction` objects.
 
 ### Reports
 
 - **Report.cpp**: The base class for all report types. It defines the common interface and functionality shared by all reports.
 - **ReportManager.cpp**: Manages the generation and retrieval of different types of reports.
-- **BalanceReport.cpp**: Generates a report detailing the balance over a period.
-- **CategoryReport.cpp**: Generates a report summarizing transactions by category.
+- **BalanceReport.cpp**: Generates a report detailing the balance from income and total expenses.
+- **CategoryReport.cpp**: Generates a report summarizing expenses by category.
 - **DateRangeReport.cpp**: Generates a report for transactions within a specified date range.
-- **DetailedCategoryReport.cpp**: Provides a detailed report on transactions in each category.
+- **DetailedCategoryReport.cpp**: Provides a detailed transactions on transactions in selected category.
 - **MonthlyReport.cpp**: Generates a monthly summary report.
 - **PaymentModeReport.cpp**: Summarizes transactions based on the payment mode (e.g., cash, credit card).
 - **QuarterlyReport.cpp**: Generates a quarterly summary report.
@@ -56,8 +44,8 @@ This project is a comprehensive financial reporting tool designed to manage and 
 ### Data Import/Export
 
 - **CSVImporter.cpp**: Handles the import of transaction data from CSV files.
-- **CSVExporter.cpp**: Exports generated reports to CSV files.
-- **ExcelExporter.cpp**: Exports generated reports to Excel format.
+- **CSVExporter.cpp**: Exports generated reports and transactions to CSV files.
+- **ExcelExporter.cpp**: Exports generated reports and transactions to Excel format.
 
 ### Utilities
 
@@ -65,19 +53,20 @@ This project is a comprehensive financial reporting tool designed to manage and 
 
 ## How to Run
 
-1. Compile the project using your preferred C++ compiler.
-2. Run the `main` executable to start the application.
-3. Use the main menu to navigate through the available options, import data, generate reports, and export them as needed.
+  1. Compile the project using your preferred C++ compiler.
+  2. Run the `main` executable to start the application.
+  3. Use the main menu to navigate through the available options, import data, generate reports, and export them as needed.
+4. To try the project out 100transaction.csv file can be imported 
 
 ## Dependencies
 
-- [Any required libraries or dependencies for the project]
-- [Instructions for installing dependencies]
+- [xlsxwriter] = a library to write to excel files.
 
-## Contribution
+## How to compile
+The project should run directly on mac
+On windows the library is not available in my findings
 
-If you'd like to contribute to this project, please fork the repository and submit a pull request. For major changes, please open an issue to discuss what you would like to change.
-
-## License
-
-This project is licensed under the [Your License Here].
+## Creator
+Vrushabh Jain
+vrushabh.jain@tum.de
+Matriculation number-03789249
