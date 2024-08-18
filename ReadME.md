@@ -9,6 +9,5 @@ Generate reports for a specific time period.
 Export and import transaction data (CSV or Excel).
 
 TODO:
-write unit tests
 try to change the dates to chrono library
 code style similarity everywhere

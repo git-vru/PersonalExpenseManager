@@ -40,10 +40,13 @@
 //     std::cout << "Transactions imported successfully from " << filename << ".\n";
 // }
 #include "CSVImporter.h"
+
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+
 #include "TransactionParser.h"
+#include "Utils.h"
 
 CSVImporter::CSVImporter(std::vector<Transaction>& transactions)
     : transactions(transactions) {}
@@ -75,10 +78,10 @@ void CSVImporter::importFromCSV(const std::string& initialFilename) {
 
     while (std::getline(file, line)) {
         std::istringstream stream(line);
-        std::string categoryStr, amountStr, date, modeStr, messageStr;
+        std::string categoryStr, amountStr, dateStr, modeStr, messageStr;
         std::getline(stream, categoryStr, ',');
         std::getline(stream, amountStr, ',');
-        std::getline(stream, date, ',');
+        std::getline(stream, dateStr, ',');
         std::getline(stream, modeStr, ',');
         std::getline(stream, messageStr);
 
@@ -86,6 +89,7 @@ void CSVImporter::importFromCSV(const std::string& initialFilename) {
             Category category = TransactionParser::parseCategory(categoryStr);
             PaymentMode paymentMode = TransactionParser::parsePaymentMode(modeStr);
             double amount = std::stod(amountStr);
+            std::chrono::year_month_day date = parseDate(dateStr);
 
             transactions.emplace_back(category, amount, date, paymentMode, messageStr);
         } catch (const std::invalid_argument& e) {

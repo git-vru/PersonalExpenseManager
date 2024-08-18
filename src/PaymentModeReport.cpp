@@ -1,9 +1,12 @@
 #include "PaymentModeReport.h"
 
-#include <fstream>
-#include <iostream>
 #include <xlsxwriter/workbook.h>
 
+#include <fstream>
+#include <iostream>
+
+#include "CSVExporter.h"
+#include "ExcelExporter.h"
 #include "TransactionParser.h"
 #include "Utils.h"
 
@@ -22,55 +25,19 @@ void PaymentModeReport::generate()  {
     paymentMode = static_cast<PaymentMode>(paymentModeIndex);
     paymentModeStr =Transaction::getAllPaymentModeNames().at(paymentModeIndex).c_str();
 
-    auto transactions = getTransactions();
     std::cout << "Report for Payment Mode: " << paymentModeStr << "\n";
-    int i=1;
-    for (const auto& transaction : transactions) {
-        std::cout << transaction.toString(i++) << "\n";
-    }
+    transactionManager.printTransactions(getTransactions());
 }
 std::vector<Transaction> PaymentModeReport::getTransactions() const {
     return transactionManager.getTransactionsByPaymentMode(paymentMode);
 }
 void PaymentModeReport::exportToExcel() const {
-    std::string path = getPBTExportsToExcelPath();
-    std::string filename = path + "PaymentModeReport_" + paymentModeStr + "_" + getCurrentTimestamp() + ".xlsx";
-
-    lxw_workbook  *workbook  = workbook_new(filename.c_str());
-    lxw_worksheet *worksheet = workbook_add_worksheet(workbook, NULL);
-
-    int row = 0;
-    for (const auto& transaction : getTransactions()) {
-        worksheet_write_string(worksheet, row, 0, transaction.toString(row + 1).c_str(), NULL);
-        row++;
-    }
-
-    workbook_close(workbook);
-    std::cout << "Payment Mode Report for " << paymentModeStr << " exported to Excel file: " << filename << "\n";
+    std::string filename = getPBTExportsToExcelPath() + "PaymentModeReport_" + paymentModeStr + "_" + getCurrentTimestamp() + ".xlsx";
+    ExcelExporter::exportToExcel(filename,getTransactions(),"Payment Mode Report for " + paymentModeStr);
 
 }
 void PaymentModeReport::exportToCsv() const {
-    std::string path = getPBTExportsToCSVPath();
-    std::string filename = path + "PaymentModeReport_" + getCurrentTimestamp() + ".csv";
-
-    std::ofstream file(filename);
-
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << "\n";
-        return;
-    }
-
-    file << "Category,Amount,Date,Payment Mode,Message\n";
-
-    for (const auto& transaction : transactions) {
-        file << Transaction::getCategoryName(transaction.getCategory()) << ","
-             << transaction.getAmount() << ","
-             << transaction.getDate() << ","
-             << Transaction::getPaymentModeName(transaction.getPaymentMode()) << ","
-             << transaction.getMessage() << "\n";
-    }
-
-    file.close();
-    std::cout << "Payment Mode Report exported to CSV file: " << filename << "\n";
+    std::string filename = getPBTExportsToCSVPath() + "PaymentModeReport_" + getCurrentTimestamp() + ".csv";
+    CSVExporter::exportToCSV(filename,getTransactions(),"Payment Mode Report for " + paymentModeStr);
 }
 

@@ -6,19 +6,15 @@
 #include <sstream>
 #include <chrono>
 #include <iomanip>
+// #include <date.h> // Ensure you have Howard Hinnant's date library
 
 #include "CSVImporter.h"
 #include "Utils.h"
 
-std::string getCurrentDate() {
+std::chrono::year_month_day getCurrentDate() {
     auto now = std::chrono::system_clock::now();
-    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-
-    std::tm now_tm = *std::localtime(&now_time);
-    std::ostringstream oss;
-    oss << std::put_time(&now_tm, "%Y-%m-%d");
-
-    return oss.str();
+    auto today = std::chrono::floor<std::chrono::days>(now); // Get the current date as days since epoch
+    return std::chrono::year_month_day{std::chrono::sys_days{today}};
 }
 
 bool isValidDate(const std::string& date_str) {
@@ -51,18 +47,15 @@ void TransactionManager::viewTransactions() const {
               << std::left << std::setw(messageWidth) << "Message" << "\n";
     std::cout << std::string(numWidth + categoryWidth + amountWidth + dateWidth + paymentModeWidth + messageWidth, '-') << "\n";
 
-    int transactionNumber = 1;
-    for (const auto& transaction : transactions) {
-        std::cout << transaction.toString(transactionNumber);
-        transactionNumber++;
-    }
+    printTransactions(transactions);
 }
 
 
 void TransactionManager::addTransaction() {
-    std::string date, message;
+    std::string message;
     double amount;
     int categoryIndex, paymentModeIndex, choice;
+    std::chrono::year_month_day date;
 
     amount = getValidatedDoubleInput("Enter transaction amount: ");
 
@@ -71,12 +64,10 @@ void TransactionManager::addTransaction() {
     if (choice == 1) {
         date = getCurrentDate();
     } else if (choice == 2) {
+        std::string dateInput;
         std::cout << "Enter date in the format (YYYY-MM-DD): ";
-        std::getline(std::cin, date);
-        while (!isValidDate(date)) {
-            std::cout << "Invalid date. Enter date in the format (YYYY-MM-DD): ";
-            std::getline(std::cin, date);
-        }
+        std::getline(std::cin, dateInput);
+        date = parseDate(dateInput);
     }
 
     std::cout << "Select a payment mode:\n";
@@ -123,9 +114,10 @@ void TransactionManager::editTransaction() {
     std::cout << "Editing transaction:\n";
     std::cout << transaction.toString(transactionIndex);
 
-    std::string date, message;
+    std::string message;
     double amount;
     int categoryIndex, paymentModeIndex, choice;
+    std::chrono::year_month_day date;
 
     amount = getValidatedDoubleInput("Enter new transaction amount (current: "+std::to_string(transaction.getAmount()) +"): ");
 
@@ -137,12 +129,10 @@ void TransactionManager::editTransaction() {
     } else if (choice == 2) {
         date = getCurrentDate();
     } else if (choice == 3) {
+        std::string dateInput;
         std::cout << "Enter date in the format (YYYY-MM-DD): ";
-        std::getline(std::cin, date);
-        while (!isValidDate(date)) {
-            std::cout << "Invalid date. Enter date in the format (YYYY-MM-DD): ";
-            std::getline(std::cin, date);
-        }
+        std::getline(std::cin, dateInput);
+        date = parseDate(dateInput);
     }
 
     std::cout << "Select a new payment mode (current: " << Transaction::getPaymentModeName(transaction.getPaymentMode()) << "):\n";
@@ -203,32 +193,49 @@ void TransactionManager::importTransactions() {
 const std::vector<Transaction>& TransactionManager::getTransactions() const {
     return transactions;
 }
+// std::vector<Transaction> TransactionManager::getTransactionsByMonth(int year, int month) const {
+//     std::vector<Transaction> result;
+//
+//     for (const auto& transaction : transactions) {
+//         auto [transYear, transMonth, transDay] = transaction.getDateComponents();
+//         if (transYear == year && transMonth == month) {
+//             result.push_back(transaction);
+//         }
+//     }
+//
+//     return result;
+// }
 std::vector<Transaction> TransactionManager::getTransactionsByMonth(int year, int month) const {
     std::vector<Transaction> result;
+    std::chrono::year targetYear{year};
+    std::chrono::month targetMonth{static_cast<unsigned>(month)};
 
     for (const auto& transaction : transactions) {
-        auto [transYear, transMonth, transDay] = transaction.getDateComponents();
-        if (transYear == year && transMonth == month) {
+        if (transaction.getDate().year() == targetYear && transaction.getDate().month() == targetMonth) {
             result.push_back(transaction);
         }
     }
 
     return result;
 }
-
 std::vector<Transaction> TransactionManager::getTransactionsByQuarter(int year, int quarter) const {
     std::vector<Transaction> result;
+    std::chrono::year targetYear{year};
 
-    int startMonth = (quarter - 1) * 3 + 1;  // Quarter 1: Jan-March, 2: April-June, etc.
+    int startMonth = (quarter - 1) * 3 + 1;
     int endMonth = startMonth + 2;
+
     for (const auto& transaction : transactions) {
-        auto [transYear, transMonth, transDay] = transaction.getDateComponents();
-        if (transYear == year && transMonth >= startMonth && transMonth <= endMonth) {
+        // auto date = parseDate(transaction.getDate());
+        if (transaction.getDate().year() == targetYear && transaction.getDate().month() >= std::chrono::month{static_cast<unsigned>(startMonth)} &&
+            transaction.getDate().month() <= std::chrono::month{static_cast<unsigned>(endMonth)}) {
             result.push_back(transaction);
-        }
+            }
     }
+
     return result;
 }
+
 
 std::vector<Transaction> TransactionManager::getTransactionsByCategory(Category category) const {
     std::vector<Transaction> result;
@@ -240,8 +247,12 @@ std::vector<Transaction> TransactionManager::getTransactionsByCategory(Category 
     return result;
 }
 
-std::vector<Transaction> TransactionManager::getTransactionsByDateRange(const std::string& startDate, const std::string& endDate) const {
+std::vector<Transaction> TransactionManager::getTransactionsByDateRange(const std::string& startDateStr,
+                                                                        const std::string& endDateStr) const {
     std::vector<Transaction> result;
+
+    auto startDate = parseDate(startDateStr);
+    auto endDate = parseDate(endDateStr);
 
     std::copy_if(transactions.begin(), transactions.end(), std::back_inserter(result),
         [this, &startDate, &endDate](const Transaction& transaction) {
@@ -251,9 +262,12 @@ std::vector<Transaction> TransactionManager::getTransactionsByDateRange(const st
     return result;
 }
 
-bool TransactionManager::isDateInRange(const std::string& date, const std::string& startDate, const std::string& endDate) const {
+bool TransactionManager::isDateInRange(const std::chrono::year_month_day& date,
+                                       const std::chrono::year_month_day& startDate,
+                                       const std::chrono::year_month_day& endDate) const {
     return date >= startDate && date <= endDate;
 }
+
 
 std::vector<Transaction> TransactionManager::getTransactionsByPaymentMode(PaymentMode paymentMode) const {
     std::vector<Transaction> result;
@@ -265,4 +279,9 @@ std::vector<Transaction> TransactionManager::getTransactionsByPaymentMode(Paymen
 
     return result;
 }
-
+void TransactionManager::printTransactions(std::vector<Transaction> transactions) const{
+    int i =1;
+    for (const auto& transaction : transactions) {
+        std::cout << transaction.toString(i++) << "\n";
+    }
+}

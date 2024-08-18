@@ -6,9 +6,7 @@
 
 class CSVExporter {
 public:
-    static void exportToCSV(const std::vector<Transaction>& transactions);
-
-    void exportToCSV() const;
+    static void exportToCSV(std::string filename,const std::vector<Transaction>& transactions,std::string outro);
 };
 
 #endif // CSVEXPORTER_H

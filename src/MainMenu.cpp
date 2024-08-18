@@ -1,13 +1,14 @@
 #include "MainMenu.h"
-#include <iostream>
+
 #include <fstream>
+#include <iostream>
 #include <sstream>
 
-#include "xlsxwriter.h"
-#include "ExcelExporter.h"
 #include "CSVExporter.h"
+#include "ExcelExporter.h"
 #include "TransactionManager.h"
-
+#include "Utils.h"
+#include "xlsxwriter.h"
 
 MainMenu::MainMenu(MenuSwitcher& menuSwitcher)
     : menuSwitcher(menuSwitcher),Menu("Main Menu"),
@@ -40,14 +41,14 @@ MainMenu::MainMenu(MenuSwitcher& menuSwitcher)
     });
 
     addOption("Export to CSV", [this]() {
-    CSVExporter::exportToCSV(transactionManager.getTransactions());
+    CSVExporter::exportToCSV(getPBTExportsToCSVPath()+"Transactions_" + getCurrentTimestamp() + ".csv",transactionManager.getTransactions(),"Transactions");
 });
 
     addOption("Export to Excel", [this]() {
-        ExcelExporter::exportToExcel(transactionManager.getTransactions());
+        ExcelExporter::exportToExcel( getPBTExportsToExcelPath() + "Transactions_" + getCurrentTimestamp() + ".xlsx", transactionManager.getTransactions(), "Transactions");
     });
-    addOption("Data Export/Import", [this]() {
-        std::cout << "Exporting/importing data...\n";
+    addOption("Data Import", [this]() {
+        std::cout << "Importing data...\n";
         transactionManager.importTransactions();
     });
 

@@ -70,10 +70,10 @@ void CategoryReport::exportToCsv() const {
         categoryTotals[transaction.getCategory()] += transaction.getAmount();
     }
 
-    file << "Category,Total Amount\n";
+    file << "Category,Total Amount,Percentage\n";
 
     for (const auto& entry : categoryTotals) {
-        file << Transaction::getCategoryName(entry.first) << "," << entry.second << "\n";
+        file << Transaction::getCategoryName(entry.first) << "," << entry.second <<"," << getPercentage(entry.second) << "\n";
     }
 
     file.close();

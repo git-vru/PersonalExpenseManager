@@ -6,19 +6,20 @@
 #include <sstream>
 #include <iomanip>
 #include <tuple>
+#include <chrono>
 
-Transaction::Transaction(Category category, double amount, const std::string& date,PaymentMode paymentMode, const std::string& message)
+Transaction::Transaction(Category category, double amount, const std::chrono::year_month_day& date,PaymentMode paymentMode, const std::string& message)
     : category(category), amount(amount), date(date),paymentMode(paymentMode), message(message) {}
 
 Category Transaction::getCategory() const { return category; }
 double Transaction::getAmount() const { return amount; }
-std::string Transaction::getDate() const { return date; }
+std::chrono::year_month_day Transaction::getDate() const { return date; }
 std::string Transaction::getMessage() const { return message; }
 PaymentMode Transaction::getPaymentMode() const { return paymentMode; }
 
 void Transaction::setCategory(Category newCategory) { category = newCategory; }
 void Transaction::setAmount(double newAmount) { amount = newAmount; }
-void Transaction::setDate(const std::string& newDate) { date = newDate; }
+void Transaction::setDate(const std::chrono::year_month_day& newDate) { date = newDate; }
 void Transaction::setMessage(const std::string& newMessage) { message = newMessage; }
 void Transaction::setPaymentMode(PaymentMode newPaymentMode) {
     paymentMode = newPaymentMode;
@@ -99,15 +100,6 @@ const std::vector<std::string>& Transaction::getAllPaymentModeNames() {
         "Other"
     };
     return paymentModeNames;
-}
-std::tuple<int, int, int> Transaction::getDateComponents() const {
-    int year, month, day;
-    char delimiter; // To read and ignore the '-' characters
-
-    std::istringstream dateStream(date);
-    dateStream >> year >> delimiter >> month >> delimiter >> day;
-
-    return std::make_tuple(year, month, day);
 }
 
 

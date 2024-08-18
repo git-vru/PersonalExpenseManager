@@ -24,7 +24,7 @@ public:
 
     double getTotalExpenses();
 
-private:
+   private:
     TransactionManager& transactionManager;
 };
 

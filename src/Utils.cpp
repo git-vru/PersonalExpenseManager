@@ -69,3 +69,29 @@ double getValidatedDoubleInput(const std::string& prompt) {
     }
     return value;
 }
+std::chrono::year_month_day parseDate(const std::string& dateStr) {
+    int year, month, day;
+    char delimiter;
+
+    std::istringstream iss(dateStr);
+    iss >> year >> delimiter >> month >> delimiter >> day;
+
+    // Ensure the values are within valid ranges
+    if (iss.fail() || delimiter != '-' || month < 1 || month > 12 || day < 1 || day > 31) {
+        throw std::invalid_argument("Invalid date format");
+    }
+
+    // Use static_cast to avoid narrowing conversion issues
+    return std::chrono::year_month_day{
+        std::chrono::year{(year)},
+        std::chrono::month{static_cast<unsigned>(month)},
+        std::chrono::day{static_cast<unsigned>(day)}
+    };
+}
+std::string formatDate(const std::chrono::year_month_day& date) {
+    std::ostringstream oss;
+    oss << date.year() << '-'
+        << std::setw(2) << std::setfill('0') << static_cast<unsigned>(date.month()) << '-'
+        << std::setw(2) << std::setfill('0') << static_cast<unsigned>(date.day());
+    return oss.str();
+}

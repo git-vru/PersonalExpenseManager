@@ -3,11 +3,9 @@
 #include "Utils.h"
 #include <iostream>
 #include <chrono>
+#include <string>
 
-
-void ExcelExporter::exportToExcel(const std::vector<Transaction>& transactions) {
-    std::string path = getPBTExportsToExcelPath();
-    std::string filename = path + "Transactions_" + getCurrentTimestamp() + ".xlsx";
+void ExcelExporter::exportToExcel(std::string filename, const std::vector<Transaction>& transactions, std::string outro) {
 
     lxw_workbook  *workbook  = workbook_new(filename.c_str());
     lxw_worksheet *worksheet = workbook_add_worksheet(workbook, NULL);
@@ -22,12 +20,12 @@ void ExcelExporter::exportToExcel(const std::vector<Transaction>& transactions) 
     for (const auto& transaction : transactions) {
         worksheet_write_string(worksheet, row, 0, Transaction::getCategoryName(transaction.getCategory()).c_str(), NULL);
         worksheet_write_number(worksheet, row, 1, transaction.getAmount(), NULL);
-        worksheet_write_string(worksheet, row, 2, transaction.getDate().c_str(), NULL);
+        worksheet_write_string(worksheet, row, 2, formatDate(transaction.getDate()).c_str(), NULL);
         worksheet_write_string(worksheet, row, 3, Transaction::getPaymentModeName(transaction.getPaymentMode()).c_str(), NULL);
         worksheet_write_string(worksheet, row, 4, transaction.getMessage().c_str(), NULL);
         row++;
     }
 
     workbook_close(workbook);
-    std::cout << "Transactions exported to Excel file: " << filename << "\n";
+    std::cout << outro + " exported to Excel file: " << filename << "\n";
 }

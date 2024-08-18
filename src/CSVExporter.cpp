@@ -4,15 +4,7 @@
 #include <iostream>
 #include <filesystem>
 
-std::string getPBTCsvExportsPath() {
-    std::string path = getDocumentsPath() + "PBT_Exports/CSV/";
-    std::filesystem::create_directories(path);  // Creates the directory if it doesn't exist
-    return path;
-}
-
-void CSVExporter::exportToCSV(const std::vector<Transaction>& transactions) {
-    std::string path = getPBTCsvExportsPath();
-    std::string filename = path + "Transactions_" + getCurrentTimestamp() + ".csv";
+void CSVExporter::exportToCSV(std::string filename,const std::vector<Transaction>& transactions,std::string outro) {
 
     std::ofstream file(filename);
 
@@ -32,6 +24,6 @@ void CSVExporter::exportToCSV(const std::vector<Transaction>& transactions) {
     }
 
     file.close();
-    std::cout << "Transactions exported to CSV file: " << filename << "\n";
+    std::cout << outro + " exported to CSV file: " << filename << "\n";
 }
 

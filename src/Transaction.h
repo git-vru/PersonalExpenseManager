@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <chrono>
 
 enum class Category {
     Groceries,
@@ -35,18 +36,18 @@ enum class PaymentMode {
 
 class Transaction {
 public:
-    Transaction(Category category, double amount, const std::string& date, PaymentMode paymentMode, const std::string& message = "");
+    Transaction(Category category, double amount, const std::chrono::year_month_day& date, PaymentMode paymentMode, const std::string& message = "");
 
     // Getters
     Category getCategory() const;
     double getAmount() const;
-    std::string getDate() const;
+    std::chrono::year_month_day getDate() const;
     std::string getMessage() const;
     PaymentMode getPaymentMode() const;
     // Setters
     void setCategory(Category newCategory);
     void setAmount(double newAmount);
-    void setDate(const std::string& newDate);
+    void setDate(const std::chrono::year_month_day& newDate);
     void setMessage(const std::string& newMessage);
     void setPaymentMode(PaymentMode newPaymentMode);
 
@@ -56,12 +57,13 @@ public:
     static std::string getPaymentModeName(PaymentMode payment_mode);
     static const std::vector<std::string>& getAllPaymentModeNames();
     std::tuple<int, int, int> getDateComponents() const;
+    std::string formatDate(const std::chrono::year_month_day& date) const;
 
 
 private:
     Category category;
     double amount;
-    std::string date;
+    std::chrono::year_month_day date;
     std::string message;
     PaymentMode paymentMode;
 };

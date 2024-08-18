@@ -7,8 +7,7 @@
 
 class ExcelExporter {
 public:
-     static void exportToExcel(const std::vector<Transaction>& transactions);
-
+     static void exportToExcel(std::string filename, const std::vector<Transaction>& transactions, std::string outro);
 };
 
 #endif // EXCELEXPORTER_H
