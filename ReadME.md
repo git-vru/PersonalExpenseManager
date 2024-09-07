@@ -1,4 +1,4 @@
-# Personal Expense Tracker
+# Personal Expense Manager
 
 ## Overview
 
@@ -69,4 +69,3 @@ On windows the library is not available in my findings
 ## Creator
 Vrushabh Jain
 vrushabh.jain@tum.de
-Matriculation number-03789249
