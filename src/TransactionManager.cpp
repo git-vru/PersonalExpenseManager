@@ -6,31 +6,11 @@
 #include <sstream>
 #include <chrono>
 #include <iomanip>
-// #include <date.h> // Ensure you have Howard Hinnant's date library
 
 #include "CSVImporter.h"
 #include "Utils.h"
 
-std::chrono::year_month_day getCurrentDate() {
-    auto now = std::chrono::system_clock::now();
-    auto today = std::chrono::floor<std::chrono::days>(now); // Get the current date as days since epoch
-    return std::chrono::year_month_day{std::chrono::sys_days{today}};
-}
-
-bool isValidDate(const std::string& date_str) {
-    std::istringstream iss(date_str);
-    int y, m, d;
-    char sep1, sep2;
-    if ((iss >> y >> sep1 >> m >> sep2 >> d) && (sep1 == '-') && (sep2 == '-')) {
-        std::chrono::year year(y);
-        std::chrono::month month(m);
-        std::chrono::day day(d);
-        std::chrono::year_month_day ymd{year, month, day};
-        return year.ok() && month.ok() && day.ok() && (ymd == std::chrono::sys_days{ymd});
-    }
-    return false;
-}
-
+// Displays all transactions in a formatted table
 void TransactionManager::viewTransactions() const {
     const int numWidth = 5;
     const int categoryWidth = 25;
@@ -50,7 +30,7 @@ void TransactionManager::viewTransactions() const {
     printTransactions(transactions);
 }
 
-
+// Adds a new transaction based on user input
 void TransactionManager::addTransaction() {
     std::string message;
     double amount;
@@ -96,7 +76,7 @@ void TransactionManager::addTransaction() {
     transactions.emplace_back(category, amount, date, mode, message);
     std::cout << "Transaction added successfully.\n";
 }
-
+//Edits current transaction bases on user input
 void TransactionManager::editTransaction() {
     if (transactions.empty()) {
         std::cout << "No transactions to edit.\n";
@@ -166,7 +146,7 @@ void TransactionManager::editTransaction() {
 
     std::cout << "Transaction updated successfully.\n";
 }
-
+//deletes transaction based on user input
 void TransactionManager::deleteTransaction() {
     if (transactions.empty()) {
         std::cout << "No transactions to delete.\n";
@@ -180,7 +160,7 @@ void TransactionManager::deleteTransaction() {
     transactions.erase(transactions.begin() + (transactionIndex - 1));
     std::cout << "Transaction deleted successfully.\n";
 }
-
+//imports transaction from a csv
 void TransactionManager::importTransactions() {
     std::string filename;
     std::cout << "Enter the CSV filename: ";
@@ -193,18 +173,7 @@ void TransactionManager::importTransactions() {
 const std::vector<Transaction>& TransactionManager::getTransactions() const {
     return transactions;
 }
-// std::vector<Transaction> TransactionManager::getTransactionsByMonth(int year, int month) const {
-//     std::vector<Transaction> result;
-//
-//     for (const auto& transaction : transactions) {
-//         auto [transYear, transMonth, transDay] = transaction.getDateComponents();
-//         if (transYear == year && transMonth == month) {
-//             result.push_back(transaction);
-//         }
-//     }
-//
-//     return result;
-// }
+
 std::vector<Transaction> TransactionManager::getTransactionsByMonth(int year, int month) const {
     std::vector<Transaction> result;
     std::chrono::year targetYear{year};
@@ -262,13 +231,6 @@ std::vector<Transaction> TransactionManager::getTransactionsByDateRange(const st
     return result;
 }
 
-bool TransactionManager::isDateInRange(const std::chrono::year_month_day& date,
-                                       const std::chrono::year_month_day& startDate,
-                                       const std::chrono::year_month_day& endDate) const {
-    return date >= startDate && date <= endDate;
-}
-
-
 std::vector<Transaction> TransactionManager::getTransactionsByPaymentMode(PaymentMode paymentMode) const {
     std::vector<Transaction> result;
 
@@ -279,6 +241,7 @@ std::vector<Transaction> TransactionManager::getTransactionsByPaymentMode(Paymen
 
     return result;
 }
+// Prints a list of transactions with index numbers
 void TransactionManager::printTransactions(std::vector<Transaction> transactions) const{
     int i =1;
     for (const auto& transaction : transactions) {

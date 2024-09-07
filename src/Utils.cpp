@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include <filesystem>
-
+//gets current timestamp to print
 std::string getCurrentTimestamp() {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -32,6 +32,7 @@ std::string getDocumentsPath() {
     }
     return std::string(homeDir) + "/Documents/";
 }
+//gets user choice
 int getUserChoice() {
     int choice;
     std::cout << "Enter your choice: ";
@@ -39,6 +40,7 @@ int getUserChoice() {
     std::cin.ignore();
     return choice;
 }
+//to check if input is in range
 int getValidatedInputRange(int min, int max) {
     int input;
     std::string line;
@@ -54,6 +56,7 @@ int getValidatedInputRange(int min, int max) {
     }
     return input;
 }
+//to check if entered amount is valid
 double getValidatedDoubleInput(const std::string& prompt) {
     double value;
     std::string input;
@@ -69,6 +72,7 @@ double getValidatedDoubleInput(const std::string& prompt) {
     }
     return value;
 }
+// Parses a date string (YYYY-MM-DD) into a year_month_day object
 std::chrono::year_month_day parseDate(const std::string& dateStr) {
     int year, month, day;
     char delimiter;
@@ -88,10 +92,37 @@ std::chrono::year_month_day parseDate(const std::string& dateStr) {
         std::chrono::day{static_cast<unsigned>(day)}
     };
 }
+//method to print a date in string
 std::string formatDate(const std::chrono::year_month_day& date) {
     std::ostringstream oss;
     oss << date.year() << '-'
         << std::setw(2) << std::setfill('0') << static_cast<unsigned>(date.month()) << '-'
         << std::setw(2) << std::setfill('0') << static_cast<unsigned>(date.day());
     return oss.str();
+}
+// Gets the current date
+std::chrono::year_month_day getCurrentDate() {
+    auto now = std::chrono::system_clock::now();
+    auto today = std::chrono::floor<std::chrono::days>(now); // Get the current date as days since epoch
+    return std::chrono::year_month_day{std::chrono::sys_days{today}};
+}
+// Validates if the date string is in the format YYYY-MM-DD
+bool isValidDate(const std::string& date_str) {
+    std::istringstream iss(date_str);
+    int y, m, d;
+    char sep1, sep2;
+    if ((iss >> y >> sep1 >> m >> sep2 >> d) && (sep1 == '-') && (sep2 == '-')) {
+        std::chrono::year year(y);
+        std::chrono::month month(m);
+        std::chrono::day day(d);
+        std::chrono::year_month_day ymd{year, month, day};
+        return year.ok() && month.ok() && day.ok() && (ymd == std::chrono::sys_days{ymd});
+    }
+    return false;
+}
+// Checks if a date is within a given date range
+bool isDateInRange(const std::chrono::year_month_day& date,
+                                       const std::chrono::year_month_day& startDate,
+                                       const std::chrono::year_month_day& endDate) {
+    return date >= startDate && date <= endDate;
 }

@@ -23,17 +23,12 @@ public:
     std::vector<Transaction> getTransactionsByCategory(Category category) const;
     std::vector<Transaction> getTransactionsByDateRange(
         const std::string& startDate, const std::string& endDate) const;
-    bool isDateInRange(const std::chrono::year_month_day& date,
-                       const std::chrono::year_month_day& startDate,
-                       const std::chrono::year_month_day& endDate) const;
     std::vector<Transaction> getTransactionsByPaymentMode(
         PaymentMode paymentMode) const;
     void printTransactions(std::vector<Transaction> transactions) const;
 
    private:
     std::vector<Transaction> transactions;
-
-    bool isDateInRange(const std::string& date, const std::string& startDate, const std::string& endDate) const;
 
 };
 
