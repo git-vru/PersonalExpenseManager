@@ -15,9 +15,9 @@ static const std::unordered_map<std::string, Category> categoryMap = {
     {"Housing", Category::Housing},
     {"Utilities", Category::Utilities},
     {"Insurance", Category::Insurance},
-    {"EatingOut", Category::EatingOut},
-    {"SavingsAndInvestments", Category::SavingsAndInvestments},
-    {"PersonalSpending", Category::PersonalSpending},
+    {"Eating-Out", Category::EatingOut},
+    {"Savings and Investments", Category::SavingsAndInvestments},
+    {"Personal Spending", Category::PersonalSpending},
     {"Entertainment", Category::Entertainment},
     {"Miscellaneous", Category::Miscellaneous}
 };
